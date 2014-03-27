@@ -1,0 +1,40 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>fr.univtln.bruno.pom</groupId>
+        <artifactId>CommonPomUTLN</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <groupId>fr.univtln.bruno.test.simple.websocket</groupId>
+    <artifactId>SimpleWebSocket</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>Message</module>
+        <module>Server</module>
+        <module>Client</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <id>lsispublic</id>
+            <url>https://lsis.univ-tln.fr/maven/content/repositories/lsispublicrepositories</url>
+        </repository>
+    </repositories>
+
+    <name>SimpleWebSocket</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.websocket</groupId>
+            <artifactId>javax.websocket-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+    </dependencies>
+
+</project>
