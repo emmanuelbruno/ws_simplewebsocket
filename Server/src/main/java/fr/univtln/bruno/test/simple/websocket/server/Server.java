@@ -1,6 +1,6 @@
 package fr.univtln.bruno.test.simple.websocket.server;
 
-import fr.univtln.bruno.test.simple.websocket.message.EchoBean;
+import fr.univtln.bruno.test.simple.websocket.message.PayloadBean;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -15,8 +15,8 @@ import java.util.List;
  */
 
 @ServerEndpoint(value = "/echo",
-        encoders = {EchoBean.EchoBeanCode.class},
-        decoders = {EchoBean.EchoBeanCode.class})
+        encoders = {PayloadBean.PayloadBeanCode.class},
+        decoders = {PayloadBean.PayloadBeanCode.class})
 public class Server {
     private static List<Session> sessions = new ArrayList<>();
     public final static String SERVER_IP;
@@ -38,20 +38,19 @@ public class Server {
         if (ip == null) ip = "localhost";
         SERVER_IP = ip;
         SERVER_PORT = port;
-        System.out.println("IP " + SERVER_IP + " PORT: " + SERVER_PORT);
+        System.out.println("Server IP:" + SERVER_IP + " Port: " + SERVER_PORT);
     }
 
 
     @OnOpen
     public void onOpen(final Session session, EndpointConfig endpointConfig) {
-        System.out.println(session.getId() + " Client connected.");
+        System.out.println("new Client connected in session "+session.getId());
         sessions.add(session);
     }
 
     @OnMessage
-    public void echo(EchoBean bean, Session peer) throws IOException, EncodeException {
-        bean.setReply(peer.getId() + " says " + bean.getMessage());
-
+    public void echo(PayloadBean bean, Session peer) throws IOException, EncodeException {
+        System.out.println("Received: "+bean);
         for (Session session : sessions)
             session.getBasicRemote().sendObject(bean);
     }

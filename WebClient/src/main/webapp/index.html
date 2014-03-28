@@ -2,37 +2,35 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
     <meta charset="utf-8">
-    <title>Web Socket JavaScript Echo Client</title>
+    <title>Web Socket JavaScript Chat Client</title>
+    <style type="text/css">
+        .date {color: red;}
+        .message {color: blue;}
+        #messageInput {margin-left:auto;width: 70%;}
+        #sentButton {width: 10%;margin-right:auto;}
+    </style>
 </head>
 
-<body>
+<body onload="send_echo()">
 <script language="javascript" type="text/javascript">
 
     var wsUri = getRootUri() + "echo";
 
     function getRootUri() {
-        /*
-        var uri = "ws://" + (document.location.hostname == "" ? "localhost" : document.location.hostname) + ":" +
-                (document.location.port == "" ? "8025" : document.location.port +
-                        (document.location.pathname == "" ? "" : document.location.pathname));
-
-        if(/index.html$/.test(uri)) {
-            uri = uri.substring(0, uri.length - "index.html".length);
-        }*/
-        var uri = "ws://localhost:8025/"
-
+        var uri = "ws://" + (document.location.hostname == "" ? "localhost" : document.location.hostname) + ":8025/";
         return uri;
     }
 
     function init() {
-        output = document.getElementById("output");
     }
 
     function send_echo() {
-
         websocket = new WebSocket(wsUri);
         websocket.onopen = function (evt) {
             onOpen(evt)
+        };
+        websocket.onclose = function (evt) {
+            onClose(evt)
         };
         websocket.onmessage = function (evt) {
             onMessage(evt)
@@ -40,17 +38,30 @@
         websocket.onerror = function (evt) {
             onError(evt)
         };
-
     }
 
     function onOpen(evt) {
         writeToScreen("CONNECTED");
-        doSend(textID.value);
+    }
 
+    function onClose(evt) {
+        writeToScreen("NOT CONNECTED");
     }
 
     function onMessage(evt) {
-        writeToScreen("RECEIVED: " + evt.data);
+        var payLoad = JSON.parse(evt.data, function (key, value) {
+            var type;
+            if (key == "date") return new Date(value);
+            if (value && typeof value === 'object') {
+                type = value.type;
+
+                if (typeof type === 'string' && typeof window[type] === 'function') {
+                    return new (window[type])(value);
+                }
+            }
+            return value;
+        });
+        writePayLoadToScreen(payLoad);
     }
 
     function onError(evt) {
@@ -58,16 +69,35 @@
     }
 
     function doSend(message) {
-        writeToScreen("SENT: " + message);
-        websocket.send(message);
+        var date = new Date();
+        var payLoad = JSON.stringify({"date": date, "message": message});
+        writeToScreen("SENT: " + payLoad);
+        websocket.send(payLoad);
     }
 
     function writeToScreen(message) {
         var pre = document.createElement("p");
         pre.style.wordWrap = "break-word";
         pre.innerHTML = message;
-        //alert(output);
-        output.appendChild(pre);
+        charArea.appendChild(pre);
+        charArea.scrollTop = charArea.scrollHeight;
+    }
+
+    function writePayLoadToScreen(payLoad) {
+        var pre = document.createElement("p");
+        pre.style.wordWrap = "break-word";
+
+        var date = document.createElement("span")
+        date.innerHTML = payLoad.date;
+        date.setAttribute("class", "date");
+        var message = document.createElement("span");
+        message.innerHTML = payLoad.message;
+        message.setAttribute("class", "message");
+
+        pre.appendChild(date).appendChild(message);
+
+        charArea.appendChild(pre);
+        charArea.scrollTop = charArea.scrollHeight;
     }
 
     window.addEventListener("load", init, false);
@@ -80,10 +110,14 @@
 
 <div style="text-align: center;">
     <form action="">
-        <input onclick="send_echo()" value="Press me" type="button">
-        <input id="textID" name="message" label="message" value="Hello Web Sockets !" type="text"><br>
+        <div style="margin-left: auto ;
+  margin-right: auto ;background: lightgrey;height:100pt;overflow:auto;width:90%;height:60%;" id="charArea"
+             rows="10"></div>
+        <div>
+            <input id="messageInput" name="message" label="message" value="Hello from Web client !" type="text">
+            <input id="sentButton" onclick="doSend(sentButton.value)" value="Press me" type="button">
+        </div>
     </form>
 </div>
-<div id="output"></div>
-</body>
+
 </html>

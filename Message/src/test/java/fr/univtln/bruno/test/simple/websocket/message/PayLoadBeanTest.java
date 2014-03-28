@@ -24,11 +24,17 @@ public class PayLoadBeanTest {
 
     @Before
     public void before() throws Exception {
-        new PayloadBean(new Date(), personne, message);
+        payloadBean=new PayloadBean(new Date(), personne, message);
     }
 
     @After
     public void after() throws Exception {
+    }
+
+    @Test
+    public void testEquals() throws Exception {
+        Assert.assertTrue(new PayloadBean(payloadBean.getDate(),personne,message).equals(payloadBean));
+        Assert.assertTrue(new PayloadBean(payloadBean.getDate(),personne,message).hashCode()==payloadBean.hashCode());
     }
 
     /**
@@ -38,10 +44,13 @@ public class PayLoadBeanTest {
     public void testEncodeDecode() throws Exception {
         //On encode une personne en JSON dans un StringWriter
         StringWriter sw = new StringWriter();
-        new PayloadBean.PayloadBeanCode().encode(payloadBean, sw);
+
+        PayloadBean.PayloadBeanCode payloadBeanCoder = new PayloadBean.PayloadBeanCode();
+        payloadBeanCoder.init();
+        payloadBeanCoder.encode(payloadBean, sw);
 
         //On decode le StringWriter dans une autre instance de Personne
-        PayloadBean newPayLoadBean = new PayloadBean.PayloadBeanCode().decode(new StringReader(sw.toString()));
+        PayloadBean newPayLoadBean = payloadBeanCoder.decode(new StringReader(sw.toString()));
 
         //On vérifie l'égalite
         Assert.assertEquals(payloadBean, newPayLoadBean);
