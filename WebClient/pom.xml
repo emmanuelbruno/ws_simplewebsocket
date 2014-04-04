@@ -32,8 +32,10 @@
                     <stopKey>STOP</stopKey>
                     <stopPort>9999</stopPort>
                     <scanIntervalSeconds>5</scanIntervalSeconds>
+
                     <connectors>
                         <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
+                            <host>0.0.0.0</host>
                             <port>8080</port>
                             <maxIdleTime>60000</maxIdleTime>
                         </connector>

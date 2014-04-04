@@ -4,14 +4,27 @@
     <meta charset="utf-8">
     <title>Web Socket JavaScript Chat Client</title>
     <style type="text/css">
-        .date {color: red;}
-        .message {color: blue;}
-        #messageInput {margin-left:auto;width: 70%;}
-        #sentButton {width: 10%;margin-right:auto;}
+        .date {
+            color: red;
+        }
+
+        .message {
+            color: blue;
+        }
+
+        #messageInput {
+            margin-left: auto;
+            width: 70%;
+        }
+
+        #sentButton {
+            width: 10%;
+            margin-right: auto;
+        }
     </style>
 </head>
 
-<body onload="send_echo()">
+<body onload="connect()">
 <script language="javascript" type="text/javascript">
 
     var wsUri = getRootUri() + "echo";
@@ -24,7 +37,7 @@
     function init() {
     }
 
-    function send_echo() {
+    function connect() {
         websocket = new WebSocket(wsUri);
         websocket.onopen = function (evt) {
             onOpen(evt)
@@ -42,10 +55,14 @@
 
     function onOpen(evt) {
         writeToScreen("CONNECTED");
+//        sentButton.disabled = "false";
+//        connectButton.disabled = "true";
     }
 
     function onClose(evt) {
         writeToScreen("NOT CONNECTED");
+//        sentButton.disabled = "true";
+//        connectButton.disabled = "false";
     }
 
     function onMessage(evt) {
@@ -102,6 +119,8 @@
 
     window.addEventListener("load", init, false);
 
+
+
 </script>
 
 <h2 style="text-align: center;">Web Socket Chat Client</h2>
@@ -110,14 +129,17 @@
 
 <div style="text-align: center;">
     <form action="">
+        <div><input id="connectButton" onclick="connect()" value="Connect" type="button" ></div>
+
         <div style="margin-left: auto ;
   margin-right: auto ;background: lightgrey;height:100pt;overflow:auto;width:90%;height:60%;" id="charArea"
              rows="10"></div>
         <div>
-            <input id="messageInput" name="message" label="message" value="Hello from Web client !" type="text">
-            <input id="sentButton" onclick="doSend(sentButton.value)" value="Press me" type="button">
+            <input id="messageInput" name="message" label="message" value="Hello from Web client !" type="text" >
+            <input id="sentButton" onclick="doSend(messageInput.value)" value="Press me" type="button">
         </div>
     </form>
 </div>
 
+</body>
 </html>
