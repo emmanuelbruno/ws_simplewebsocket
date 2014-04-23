@@ -64,7 +64,7 @@ public class Server {
     public static void main(String[] args) {
         System.out.println("Server starting...");
         org.glassfish.tyrus.server.Server server =
-                new org.glassfish.tyrus.server.Server(SERVER_IP, SERVER_PORT, "/", Server.class);
+                new org.glassfish.tyrus.server.Server(SERVER_IP, SERVER_PORT, "/", null, Server.class);
 
         try {
             server.start();

@@ -3,18 +3,19 @@ package fr.univtln.bruno.test.simple.websocket.message;
 import fr.univtln.bruno.test.simple.jsoncoder.JSONCoder;
 import fr.univtln.bruno.test.simple.personne.Personne;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by bruno on 26/03/14.
  */
-public class PayloadBean {
+public class PayloadBean implements Serializable {
     public final static class PayloadBeanCode extends
             JSONCoder<PayloadBean> {
     }
 
     private Date date;
-    //private Personne sender;
+    private Personne sender;
     private String message;
 
     public PayloadBean() {
@@ -22,7 +23,7 @@ public class PayloadBean {
 
     public PayloadBean(Date date,Personne sender,String message) {
         this.date = date;
-        //this.sender = sender;
+        this.sender = sender;
         this.message = message;
     }
 
@@ -31,7 +32,7 @@ public class PayloadBean {
     }
 
     public void setSender(Personne sender) {
-        //this.sender = sender;
+        this.sender = sender;
     }
 
     public void setMessage(String message) {
@@ -46,15 +47,15 @@ public class PayloadBean {
         return date;
     }
 
-    /*public Personne getSender() {
+    public Personne getSender() {
         return sender;
-    }*/
+    }
 
     @Override
     public String toString() {
         return "PayloadBean{" +
                 "date=" + date +
-                //", sender=" + sender +
+                ", sender=" + sender +
                 ", message='" + message + '\'' +
                 '}';
     }
@@ -68,7 +69,7 @@ public class PayloadBean {
 
         if (!date.equals(that.date)) return false;
         if (!message.equals(that.message)) return false;
-        //if (!sender.equals(that.sender)) return false;
+        if (!sender.equals(that.sender)) return false;
 
         return true;
     }
@@ -76,7 +77,7 @@ public class PayloadBean {
     @Override
     public int hashCode() {
         int result = date.hashCode();
-        //result = 31 * result + sender.hashCode();
+        result = 31 * result + sender.hashCode();
         result = 31 * result + message.hashCode();
         return result;
     }
