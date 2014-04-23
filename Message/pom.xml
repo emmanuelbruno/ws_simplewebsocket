@@ -10,6 +10,7 @@
 
     <artifactId>Message</artifactId>
     <packaging>jar</packaging>
+    <version>1.0.1</version>
 
     <name>SimpleWebSocketMessage</name>
 
@@ -17,13 +18,13 @@
         <dependency>
             <groupId>fr.univtln.bruno.test.simple.jsoncoder</groupId>
             <artifactId>JSONCoder</artifactId>
-            <version>1.0</version>
+            <version>1.0.1</version>
         </dependency>
 
         <dependency>
             <groupId>fr.univtln.bruno.test.simple.personne</groupId>
             <artifactId>SimplePersonne</artifactId>
-            <version>1.0</version>
+            <version>1.0.4</version>
         </dependency>
 
     </dependencies>
