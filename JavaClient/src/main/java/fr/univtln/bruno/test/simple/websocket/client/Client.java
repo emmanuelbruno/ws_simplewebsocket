@@ -6,9 +6,10 @@ import fr.univtln.bruno.test.simple.websocket.message.PayloadBean;
 import org.glassfish.tyrus.client.ClientManager;
 
 import javax.websocket.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
-import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -101,11 +102,7 @@ public class Client {
         try {
             final ClientManager client = ClientManager.createClient();
             client.connectToServer(
-                    beanClient
-                    , ClientEndpointConfig.Builder.create()
-                            .encoders(Arrays.<Class<? extends Encoder>>asList(PayloadBean.PayloadBeanCode.class))
-                            .decoders(Arrays.<Class<? extends Decoder>>asList(PayloadBean.PayloadBeanCode.class))
-                            .build(),
+                    beanClient,
                     URI.create("ws://" + SERVER_IP + ":" + SERVER_PORT + "/echo")
             );
 
