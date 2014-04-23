@@ -5,11 +5,10 @@
     <parent>
         <groupId>fr.univtln.bruno.test.simple.websocket</groupId>
         <artifactId>SimpleWebSocket</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
 
     <artifactId>Message</artifactId>
-    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>SimpleWebSocketMessage</name>
@@ -18,13 +17,13 @@
         <dependency>
             <groupId>fr.univtln.bruno.test.simple.jsoncoder</groupId>
             <artifactId>JSONCoder</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
 
         <dependency>
             <groupId>fr.univtln.bruno.test.simple.personne</groupId>
             <artifactId>SimplePersonne</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
 
     </dependencies>
