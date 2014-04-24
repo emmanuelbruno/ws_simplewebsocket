@@ -87,7 +87,7 @@
 
     function doSend(message) {
         var date = new Date();
-        var payLoad = JSON.stringify({"date": date, "message": message});
+        var payLoad = JSON.stringify({"date": date,"sender":{"id":1, "nom":"John", "prenom":'Doe'}, "message": message});
         writeToScreen("SENT: " + payLoad);
         websocket.send(payLoad);
     }
@@ -107,11 +107,16 @@
         var date = document.createElement("span")
         date.innerHTML = payLoad.date;
         date.setAttribute("class", "date");
+
+        var sender = document.createElement("span")
+        sender.innerHTML = "["+payLoad.sender.nom+", "+payLoad.sender.prenom+"]";
+        date.setAttribute("class", "sender");
+
         var message = document.createElement("span");
         message.innerHTML = payLoad.message;
         message.setAttribute("class", "message");
 
-        pre.appendChild(date).appendChild(message);
+        pre.appendChild(date).appendChild(sender).appendChild(message);
 
         charArea.appendChild(pre);
         charArea.scrollTop = charArea.scrollHeight;
