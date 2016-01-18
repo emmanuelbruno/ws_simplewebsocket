@@ -18,13 +18,13 @@
         <dependency>
             <groupId>fr.univtln.bruno.test.simple.jsoncoder</groupId>
             <artifactId>JSONCoder</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.2</version>
         </dependency>
 
         <dependency>
             <groupId>fr.univtln.bruno.test.simple.personne</groupId>
             <artifactId>SimplePersonne</artifactId>
-            <version>1.0.4</version>
+            <version>1.0.5</version>
         </dependency>
 
     </dependencies>
